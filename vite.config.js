@@ -5,6 +5,9 @@ import Markdown from 'vite-plugin-vue-markdown'
 import path from 'node:path'
 import { VitePWA } from 'vite-plugin-pwa'
 
+// Set your GitHub repository name here
+const repoName = 'portfolio';  // Replace 'your-repo-name' with your actual repository name
+
 export default defineConfig({
   plugins: [
     vue({
@@ -12,18 +15,18 @@ export default defineConfig({
     }),
     Markdown(),
     VitePWA({
-      mode: "development",
-      base: "/",
-      srcDir: "src",
-      filename: "sw.ts",
-      strategies: "injectManifest",
+      mode: 'development',
+      base: `/`,  // GitHub Pages will deploy your app to the root of the repository
+      srcDir: 'src',
+      filename: 'sw.ts',
+      strategies: 'injectManifest',
       manifest: {
-        name: "Mostafa Kamal Portfolio 💼",
+        name: 'Mostafa Kamal Portfolio 💼',
         short_name: 'Mostafa-Kamal-Portfolio',
         description: 'A personal portfolio to showcase my experience, education, skills, projects, certificates, achievements, and recommendations.',
         theme_color: '#ffffff',
-        start_url: "/",
-        display: "standalone",
+        start_url: '/',
+        display: 'standalone',
         icons: [
           {
             src: 'icon-72x72.png',
@@ -62,13 +65,15 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
-        output:{
-            manualChunks(id) {
-                if (id.includes('node_modules')) {
-                    return id.toString().split('node_modules/')[1].split('/')[0].toString();
-                }
-            }
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            return id.toString().split('node_modules/')[1].split('/')[0].toString();
+          }
         }
+      }
     }
-  }
+  },
+  // Add the base path to handle GitHub Pages correctly
+  base: `/portfolio/`  // Replace 'your-repo-name' with the actual repository name
 })
